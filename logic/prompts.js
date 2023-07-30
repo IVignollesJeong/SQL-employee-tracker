@@ -42,17 +42,27 @@ const mainMenu = () => {
 
 
 // EMPLOYEE TABLE ACTIONS (VIEW ALL, ADD, MODIFY)
+////////////////////////////////////////////////////////////////////////////////////////////////
 const viewAllEmployees = async () => {
     const viewEmployee = await sqlQuery(`SELECT employee.id, 
     employee.first_name, 
-    employee.last_name 
-    FROM employee`);
+    employee.last_name,
+    role.title AS title,
+    department.name AS department,
+    role.salary,
+    CONCAT(manager.first_name, " ", manager.last_name) AS \`reporting manager\` 
+    FROM employee
+    LEFT JOIN role on employee.role_id = role.id
+    LEFT JOIN department ON role.department_id = department.id
+    LEFT JOIN employee manager ON employee.manager_id = manager.id;`);
     console.log(viewEmployee);
     mainMenu();
 };
 
 
+
 // DEPARTMENT TABLE ACTIONS (VIEW ALL, ADD)
+////////////////////////////////////////////////////////////////////////////////////////////////
 const viewAllDepartments = async () => {
     const dept = await sqlQuery('SELECT * FROM department');
     console.log(dept);
@@ -73,8 +83,8 @@ const addNewDepartment = async () => {
 }
 
 
-
 // ROLE TABLE ACTIONS (VIEW ALL, ADD)
+////////////////////////////////////////////////////////////////////////////////////////////////
 const viewAllRoles = async () => {
     const role = await sqlQuery('SELECT * FROM role');
     console.log(role);
@@ -110,5 +120,8 @@ const addNewRole = async () => {
     console.log(`New role ${newRole.title} has been added to department ${newRole.department_id}.`);
     mainMenu(); 
 }
+
+
+
 
 module.exports = {mainMenu};
