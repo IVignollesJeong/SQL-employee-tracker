@@ -1,5 +1,6 @@
 const {sqlConnect, sqlQuery} = require('./sqlconnect');
 const inquirer = require('inquirer');
+const consoleTable = require('console.table');
 
 
 const mainMenu = () => {
@@ -55,7 +56,7 @@ const viewAllEmployees = async () => {
     LEFT JOIN role on employee.role_id = role.id
     LEFT JOIN department ON role.department_id = department.id
     LEFT JOIN employee manager ON employee.manager_id = manager.id;`);
-    console.log(viewEmployee);
+    console.table(viewEmployee);
     mainMenu();
 };
 
@@ -151,7 +152,7 @@ const updateEmployee = async () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const viewAllDepartments = async () => {
     const dept = await sqlQuery('SELECT * FROM department');
-    console.log(dept);
+    console.table(dept);
     mainMenu();
 };
 
@@ -173,7 +174,7 @@ const addNewDepartment = async () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const viewAllRoles = async () => {
     const role = await sqlQuery('SELECT * FROM role');
-    console.log(role);
+    console.table(role);
     mainMenu();
 };
 
