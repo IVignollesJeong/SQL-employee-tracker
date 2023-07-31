@@ -1,3 +1,4 @@
+// import mysql2, dotenv. mysql2 will connect code to mysql database, dotenv will allow us to hide our mysql password in .env file for privacy.
 const mysql = require('mysql2');
 require('dotenv').config();
 
